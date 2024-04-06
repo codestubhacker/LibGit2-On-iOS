@@ -187,7 +187,8 @@ function build_libgit2() {
         -DUSE_SSH=ON \
         -DLIBSSH2_FOUND=YES \
 	-DHAVE_LIBSSH2_MEMORY_CREDENTIALS=ON \
-        -DLIBSSH2_INCLUDE_DIRS=$REPO_ROOT/install/$PLATFORM/include)
+        -DLIBSSH2_INCLUDE_DIRS=$REPO_ROOT/install/$PLATFORM/include) \
+	-DBUILD_SHARED_LIBS=OFF
 
     cmake "${CMAKE_ARGS[@]}" .. #>/dev/null 2>/dev/null
 
