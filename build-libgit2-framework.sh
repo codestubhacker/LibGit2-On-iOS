@@ -172,7 +172,7 @@ function build_libgit2() {
     setup_variables $1
 
     rm -rf libgit2-1.8.0
-    test -f v1.3.1.zip || wget -q https://github.com/libgit2/libgit2/archive/refs/tags/v1.8.0.zip
+    test -f v1.8.0.zip || wget -q https://github.com/libgit2/libgit2/archive/refs/tags/v1.8.0.zip
     ditto -V -x -k --sequesterRsrc --rsrc v1.8.0.zip ./ >/dev/null 2>/dev/null
     cd libgit2-1.8.0
 
