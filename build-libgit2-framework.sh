@@ -148,10 +148,10 @@ function build_openssl() {
 function build_libssh2() {
 	setup_variables $1
 
-	rm -rf libssh2-1.11.0
-	test -f libssh2-1.11.0.tar.gz || wget -q https://www.libssh2.org/download/libssh2-1.11.0.tar.gz
-	tar xzf libssh2-1.11.0.tar.gz
-	cd libssh2-1.11.0
+	rm -rf libssh2-1.10.0
+	test -f libssh2-1.10.0.tar.gz || wget -q https://www.libssh2.org/download/libssh2-1.10.0.tar.gz
+	tar xzf libssh2-1.10.0.tar.gz
+	cd libssh2-1.10.0
 
 	rm -rf build && mkdir build && cd build
 
@@ -171,10 +171,10 @@ function build_libssh2() {
 function build_libgit2() {
     setup_variables $1
 
-    rm -rf libgit2-1.8.0
-    test -f v1.8.0.zip || wget -q https://github.com/libgit2/libgit2/archive/refs/tags/v1.8.0.zip
-    ditto -V -x -k --sequesterRsrc --rsrc v1.8.0.zip ./ >/dev/null 2>/dev/null
-    cd libgit2-1.8.0
+    rm -rf libgit2-1.3.1
+    test -f v1.3.1.zip || wget -q https://github.com/libgit2/libgit2/archive/refs/tags/v1.3.1.zip
+    ditto -V -x -k --sequesterRsrc --rsrc v1.3.1.zip ./ >/dev/null 2>/dev/null
+    cd libgit2-1.3.1
 
     rm -rf build && mkdir build && cd build
 
@@ -187,8 +187,7 @@ function build_libgit2() {
         -DUSE_SSH=ON \
         -DLIBSSH2_FOUND=YES \
 	-DHAVE_LIBSSH2_MEMORY_CREDENTIALS=ON \
-        -DLIBSSH2_INCLUDE_DIRS=$REPO_ROOT/install/$PLATFORM/include) \
-	-DBUILD_SHARED_LIBS=OFF
+        -DLIBSSH2_INCLUDE_DIRS=$REPO_ROOT/install/$PLATFORM/include)
 
     cmake "${CMAKE_ARGS[@]}" .. #>/dev/null 2>/dev/null
 
@@ -234,10 +233,6 @@ for p in ${AVAILABLE_PLATFORMS[@]}; do
 	# Merge all static libs as libgit2.a since xcodebuild doesn't allow specifying multiple .a
 	cd $REPO_ROOT/install/$p
 	libtool -static -o libgit2.a lib/*.a
-
-  	if [ ! -f "$REPO_ROOT/install/$p/include/git2.h" ]; then
-    	echo "git2.h not found for platform $p."
-	fi
 done
 
 # Merge the libgit2.a for iphonesimulator & iphonesimulator-arm64 as well as maccatalyst & maccatalyst-arm64 using lipo
