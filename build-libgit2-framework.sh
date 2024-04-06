@@ -234,6 +234,10 @@ for p in ${AVAILABLE_PLATFORMS[@]}; do
 	# Merge all static libs as libgit2.a since xcodebuild doesn't allow specifying multiple .a
 	cd $REPO_ROOT/install/$p
 	libtool -static -o libgit2.a lib/*.a
+
+  	if [ ! -f "$REPO_ROOT/install/$p/include/git2.h" ]; then
+    	echo "git2.h not found for platform $p."
+	fi
 done
 
 # Merge the libgit2.a for iphonesimulator & iphonesimulator-arm64 as well as maccatalyst & maccatalyst-arm64 using lipo
